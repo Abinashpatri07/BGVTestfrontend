@@ -12,7 +12,7 @@ function formatTimeAgo(dateString) {
   if (diffInSeconds < 60) return "Just now";
   const diffInMinutes = Math.floor(diffInSeconds / 60);
   if (diffInMinutes < 60) return `${diffInMinutes} min ago`;
-  const diffInHours = Math.floor(diffInSeconds / 60);
+  const diffInHours = Math.floor(diffInMinutes / 60);
   if (diffInHours < 24) return `${diffInHours} hr ago`;
   const diffInDays = Math.floor(diffInHours / 24);
   if (diffInDays === 1) return "1 day ago";
@@ -43,7 +43,7 @@ const AVATAR_PALETTES = [
   { bg: "bg-[#FFE4E6]", text: "text-[#E11D48]" }, // Rose
 ];
 
-export default function RecentProfiles({ data = [] }) {
+export default function RecentProfiles({ data = [], className = "" }) {
   const navigate = useNavigate();
 
   // Fallback sample if no profiles from backend
@@ -54,12 +54,14 @@ export default function RecentProfiles({ data = [] }) {
     { name: "Nrusingha Prasad", role: "Candidate", time: "24 days ago" },
     { name: "Shalini Nanda", role: "HR", time: "27 days ago" },
     { name: "Sagar Sethi", role: "Candidate", time: "27 days ago" },
+    { name: "Ashok Subudhi", role: "Candidate", time: "30 days ago" },
+    { name: "Anushka Sharma", role: "HR", time: "32 days ago" },
   ];
 
   const profilesToRender = data && data.length > 0 ? data : sampleProfiles;
 
   return (
-    <div className="bg-white rounded-2xl border border-[#E8EBFF] p-5 shadow-sm flex flex-col h-[280px]">
+    <div className={`bg-white rounded-2xl border border-[#E8EBFF] p-5 shadow-sm flex flex-col h-[340px] ${className}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-3 shrink-0">
         <h3 className="text-sm sm:text-base font-bold text-[#0F172A]">
@@ -73,9 +75,9 @@ export default function RecentProfiles({ data = [] }) {
         </button>
       </div>
 
-      {/* Profiles List with modern scrollbar */}
+      {/* Profiles List: displays 5-6 profiles cleanly, remaining scrollable */}
       <div
-        className="flex-1 space-y-2.5 overflow-y-auto pr-1.5 custom-scrollbar"
+        className="flex-1 space-y-2.5 overflow-y-auto pr-1.5 custom-scrollbar min-h-0"
         style={{
           scrollbarWidth: "thin",
           scrollbarColor: "#CBD5E1 #F1F5F9",
