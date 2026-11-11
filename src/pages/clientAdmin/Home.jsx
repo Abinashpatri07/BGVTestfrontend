@@ -60,21 +60,22 @@ function Home() {
         onScrollToRecent={handleScrollToRecent}
       />
 
-      {/* ───────────────── MAIN 2-COLUMN GRID ───────────────── */}
-      <div className="grid grid-cols-12 gap-4 items-start">
-        {/* LEFT COLUMN (HR & Candidate Overviews) */}
-        <div className="col-span-12 lg:col-span-8 flex flex-col gap-4">
-          <HROverview data={hrStats} />
-          <CandidateOverview data={candidateStats} />
+      {/* ───────────────── MAIN 2-ROW GRID (PERFECT ROW ALIGNMENT) ───────────────── */}
+      <div className="grid grid-cols-12 gap-4 items-stretch">
+        {/* ROW 1: HR Overview (8 cols) & Verification Credits (4 cols) */}
+        <div className="col-span-12 lg:col-span-8 flex flex-col">
+          <HROverview data={hrStats} className="h-full" />
+        </div>
+        <div className="col-span-12 lg:col-span-4 flex flex-col">
+          <VerificationCredits data={credits} className="h-full" />
         </div>
 
-        {/* RIGHT COLUMN (Verification Credits & Recent Profiles) */}
-        <div
-          ref={recentProfilesRef}
-          className="col-span-12 lg:col-span-4 flex flex-col gap-4"
-        >
-          <VerificationCredits data={credits} />
-          <RecentProfiles data={recentProfiles} />
+        {/* ROW 2: Candidate Overview (8 cols) & Recent Profiles (4 cols) */}
+        <div className="col-span-12 lg:col-span-8 flex flex-col">
+          <CandidateOverview data={candidateStats} className="h-full" />
+        </div>
+        <div ref={recentProfilesRef} className="col-span-12 lg:col-span-4 flex flex-col">
+          <RecentProfiles data={recentProfiles} className="h-full" />
         </div>
       </div>
     </div>

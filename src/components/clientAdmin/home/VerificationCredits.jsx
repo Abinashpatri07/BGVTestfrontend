@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function VerificationCredits({ data }) {
+export default function VerificationCredits({ data, className = "" }) {
   const totalCredits = data?.totalCredits ?? 500;
   const creditsUsed = data?.creditsUsed ?? 1;
   const availableRemaining = data?.availableRemaining ?? (totalCredits - creditsUsed);
@@ -10,7 +10,7 @@ export default function VerificationCredits({ data }) {
     : 100;
 
   return (
-    <div className="bg-gradient-to-br from-[#3342C6] via-[#303FB8] to-[#28349E] rounded-2xl p-5 text-white shadow-sm flex flex-col justify-between h-full">
+    <div className={`bg-gradient-to-br from-[#3342C6] via-[#303FB8] to-[#28349E] rounded-2xl p-5 text-white shadow-sm flex flex-col justify-between shrink-0 ${className}`}>
       {/* Top Header */}
       <div>
         <div className="flex items-center justify-between">

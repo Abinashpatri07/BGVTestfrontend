@@ -8,7 +8,7 @@ import {
   Ban,
 } from "lucide-react";
 
-export default function CandidateOverview({ data }) {
+export default function CandidateOverview({ data, className = "" }) {
   const formatVal = (val) => String(val !== undefined && val !== null ? val : 0).padStart(2, "0");
 
   const cards = [
@@ -69,9 +69,9 @@ export default function CandidateOverview({ data }) {
   ];
 
   return (
-    <div className="bg-white rounded-2xl border border-[#E8EBFF] p-5 shadow-sm">
+    <div className={`bg-white rounded-2xl border border-[#E8EBFF] p-5 shadow-sm flex flex-col justify-between ${className}`}>
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 shrink-0">
         <h2 className="text-sm sm:text-base font-bold text-[#0F172A]">
           Candidate overview
         </h2>
@@ -81,7 +81,7 @@ export default function CandidateOverview({ data }) {
       </div>
 
       {/* Grid: 3 columns */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 flex-1">
         {cards.map((card, idx) => (
           <div
             key={idx}
