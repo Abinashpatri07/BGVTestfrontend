@@ -250,159 +250,163 @@ function CandidateTable({
 
       {/* ── TABLE ── */}
       <div className="bg-white rounded-2xl border border-gray-200 overflow-visible shadow-sm">
-        <table className="w-full border-collapse">
-          <thead className="bg-[#FAFAFA] border-b border-gray-200">
-            <tr>
-              <th className="px-4 py-3 w-12">
-                <input
-                  type="checkbox"
-                  checked={selectedRows.length === candidates.length && candidates.length > 0}
-                  onChange={handleSelectAll}
-                  className="w-4 h-4 accent-[#4338CA] cursor-pointer"
-                />
-              </th>
-              <th className="px-4 py-3 text-sm font-semibold text-[#1F2937] text-left whitespace-nowrap">Candidate ID</th>
-              <th className="px-4 py-3 text-sm font-semibold text-[#1F2937] text-left">Date</th>
-              <th className="px-4 py-3 text-sm font-semibold text-[#1F2937] text-left">Name</th>
-              <th className="px-4 py-3 text-sm font-semibold text-[#1F2937] text-left">Phone</th>
-              <th className="px-4 py-3 text-sm font-semibold text-[#1F2937] text-left">Assigned HR</th>
-              <th className="px-4 py-3 text-sm font-semibold text-[#1F2937] text-left">Function / Tag</th>
-              <th className="px-4 py-3 text-sm font-semibold text-[#1F2937] text-left">Status</th>
-              <th className="px-4 py-3 text-sm font-semibold text-[#1F2937] text-center w-20">Action</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {loading ? (
+        <div className="overflow-x-auto min-w-full">
+          <table className="w-full min-w-[1100px] border-collapse">
+            <thead className="bg-[#FAFAFA] border-b border-gray-200">
               <tr>
-                <td colSpan="9">
-                  <div className="flex flex-col items-center justify-center py-20 gap-3">
-                    <Loader2 size={36} className="text-[#4338CA] animate-spin" />
-                    <p className="text-sm text-gray-400">Loading candidates...</p>
-                  </div>
-                </td>
+                <th className="px-5 py-4 w-12 text-left">
+                  <input
+                    type="checkbox"
+                    checked={selectedRows.length === candidates.length && candidates.length > 0}
+                    onChange={handleSelectAll}
+                    className="w-4 h-4 accent-[#4338CA] cursor-pointer"
+                  />
+                </th>
+                <th className="px-5 py-4 text-sm font-semibold text-[#1F2937] text-left whitespace-nowrap">Candidate ID</th>
+                <th className="px-5 py-4 text-sm font-semibold text-[#1F2937] text-left whitespace-nowrap">Date</th>
+                <th className="px-5 py-4 text-sm font-semibold text-[#1F2937] text-left whitespace-nowrap">Name</th>
+                <th className="px-5 py-4 text-sm font-semibold text-[#1F2937] text-left whitespace-nowrap">Phone</th>
+                <th className="px-5 py-4 text-sm font-semibold text-[#1F2937] text-left whitespace-nowrap">Assigned HR</th>
+                <th className="px-5 py-4 text-sm font-semibold text-[#1F2937] text-left whitespace-nowrap">Function / Tag</th>
+                <th className="px-5 py-4 text-sm font-semibold text-[#1F2937] text-left whitespace-nowrap">Status</th>
+                <th className="px-5 py-4 text-sm font-semibold text-[#1F2937] text-center w-20 whitespace-nowrap">Action</th>
               </tr>
-            ) : fetchError ? (
-              <tr>
-                <td colSpan="9">
-                  <div className="flex flex-col items-center justify-center py-20 gap-3">
-                    <p className="text-sm text-red-500">{fetchError}</p>
-                    <button
-                      onClick={fetchCandidates}
-                      className="px-4 py-1.5 bg-[#02027A] text-white text-sm rounded-lg hover:opacity-90"
-                    >
-                      Retry
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ) : candidates.length === 0 ? (
-              <tr>
-                <td colSpan="9">
-                  <div className="flex flex-col items-center justify-center py-20 gap-3">
-                    <Users size={40} className="text-gray-300" />
-                    <p className="text-sm text-gray-400">
-                      {searchQuery
-                        ? `No results for "${searchQuery}"`
-                        : "No candidates found. Add one to get started!"}
-                    </p>
-                  </div>
-                </td>
-              </tr>
-            ) : (
-              candidates.map((item, index) => (
-                <tr
-                  key={item.id}
-                  className="border-b border-gray-100 hover:bg-[#FAFAFA] transition-all duration-150"
-                >
-                  <td className="px-4 py-1.5">
-                    <input
-                      type="checkbox"
-                      checked={selectedRows.includes(item.id)}
-                      onChange={() => handleRowSelect(item.id)}
-                      className="w-4 h-4 accent-[#4338CA] cursor-pointer"
-                    />
-                  </td>
+            </thead>
 
-                  <td className="px-4 py-1.5 text-sm text-gray-700 font-mono">{item.candidateId}</td>
-
-                  <td className="px-4 py-1.5">
-                    <div className="text-sm text-gray-700 font-medium">
-                      {item.created_at
-                        ? new Date(item.created_at).toLocaleDateString("en-IN", { day:"2-digit", month:"short", year:"numeric" })
-                        : "—"}
-                    </div>
-                    <div className="text-[11px] text-gray-400">
-                      {item.created_at
-                        ? new Date(item.created_at).toLocaleTimeString("en-IN", { hour:"2-digit", minute:"2-digit", hour12:true })
-                        : ""}
-                    </div>
-                  </td>
-
-                  <td className="px-4 py-1.5">
-                    <div className="font-semibold text-sm text-gray-900 leading-tight">{item.name}</div>
-                    <div className="text-[11px] text-gray-400">{item.email}</div>
-                  </td>
-
-                  <td className="px-4 py-1.5 text-sm text-gray-700">{item.phone}</td>
-
-                  <td className="px-4 py-1.5">
-                    {item.assigned_hr ? (
-                      <>
-                        <div className="text-sm text-gray-800 font-medium">{item.assigned_hr.name}</div>
-                        <div className="text-[11px] text-gray-400">{item.assigned_hr.email}</div>
-                      </>
-                    ) : (
-                      <span className="text-[11px] text-gray-300 italic">Not assigned</span>
-                    )}
-                  </td>
-
-                  <td className="px-4 py-1.5">
-                    <div className="text-sm text-gray-800 font-medium leading-tight">
-                      {item.job_function || <span className="text-gray-300">—</span>}
-                    </div>
-                    {item.tag && (
-                      <div className="text-[11px] text-gray-400">{item.tag}</div>
-                    )}
-                  </td>
-
-                  <td className="px-4 py-1.5">
-                    <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold whitespace-nowrap ${getStatusStyle(item.status)}`}>
-                      {item.status}
-                    </span>
-                  </td>
-
-                  <td className="px-4 py-1.5 text-center w-20">
-                    <div className="relative inline-block" ref={(el) => (menuRefs.current[index] = el)}>
-                      <button
-                        onClick={(e) => { e.stopPropagation(); setOpenMenu(openMenu === index ? null : index); }}
-                        className="p-2 rounded-lg hover:bg-gray-100 transition"
-                      >
-                        <MoreVertical size={18} className="text-gray-500" />
-                      </button>
-
-                      {openMenu === index && (
-                        <div className={`absolute right-12 w-56 z-[9999] ${index >= candidates.length - 3 ? "bottom-10" : "top-10"}`}>
-                          <ActionDropdown
-                            candidateStatus={item.status}
-                            onView={() => { navigate(`/admin/view/${item.id}`); setOpenMenu(null); }}
-                            onEdit={() => { navigate(`/admin/edit-candidate/${item.id}`); setOpenMenu(null); }}
-                            onEmail={() => { handleSendEmail(item); setOpenMenu(null); }}
-                            onAssignHr={() => { setAssignHRCandidate(item); setShowAssignHRModal(true); setOpenMenu(null); }}
-                            onAuditLog={() => { navigate("/admin/audit-log"); setOpenMenu(null); }}
-                            onHold={() => { setOnHoldCandidate(item); setShowOnHoldModal(true); setOpenMenu(null); }}
-                            onRemoveHold={() => { setRemoveHoldCandidate(item); setShowRemoveHoldModal(true); setOpenMenu(null); }}
-                            onReject={() => { setSelectedCandidate(item); setShowRejectModal(true); setOpenMenu(null); }}
-                          />
-                        </div>
-                      )}
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan="9">
+                    <div className="flex flex-col items-center justify-center py-20 gap-3">
+                      <Loader2 size={36} className="text-[#4338CA] animate-spin" />
+                      <p className="text-sm text-gray-400">Loading candidates...</p>
                     </div>
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : fetchError ? (
+                <tr>
+                  <td colSpan="9">
+                    <div className="flex flex-col items-center justify-center py-20 gap-3">
+                      <p className="text-sm text-red-500">{fetchError}</p>
+                      <button
+                        onClick={fetchCandidates}
+                        className="px-4 py-1.5 bg-[#02027A] text-white text-sm rounded-lg hover:opacity-90"
+                      >
+                        Retry
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ) : candidates.length === 0 ? (
+                <tr>
+                  <td colSpan="9">
+                    <div className="flex flex-col items-center justify-center py-20 gap-3">
+                      <Users size={40} className="text-gray-300" />
+                      <p className="text-sm text-gray-400">
+                        {searchQuery
+                          ? `No results for "${searchQuery}"`
+                          : "No candidates found. Add one to get started!"}
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+              ) : (
+                candidates.map((item, index) => (
+                  <tr
+                    key={item.id}
+                    className="border-b border-gray-100 hover:bg-[#FAFAFA] transition-all duration-150"
+                  >
+                    <td className="px-5 py-4 whitespace-nowrap">
+                      <input
+                        type="checkbox"
+                        checked={selectedRows.includes(item.id)}
+                        onChange={() => handleRowSelect(item.id)}
+                        className="w-4 h-4 accent-[#4338CA] cursor-pointer"
+                      />
+                    </td>
+
+                    <td className="px-5 py-4 text-sm text-gray-700 font-mono font-medium whitespace-nowrap">{item.candidateId}</td>
+
+                    <td className="px-5 py-4 whitespace-nowrap">
+                      <div className="flex items-center gap-2 whitespace-nowrap">
+                        <span className="text-sm font-medium text-gray-800">
+                          {item.created_at
+                            ? new Date(item.created_at).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })
+                            : "—"}
+                        </span>
+                        {item.created_at && (
+                          <span className="text-xs text-gray-400 font-normal">
+                            {new Date(item.created_at).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true })}
+                          </span>
+                        )}
+                      </div>
+                    </td>
+
+                    <td className="px-5 py-4 whitespace-nowrap">
+                      <div className="font-semibold text-sm text-gray-900 leading-snug">{item.name}</div>
+                      <div className="text-xs text-gray-400 mt-0.5">{item.email}</div>
+                    </td>
+
+                    <td className="px-5 py-4 text-sm text-gray-700 font-medium whitespace-nowrap">{item.phone}</td>
+
+                    <td className="px-5 py-4 whitespace-nowrap">
+                      {item.assigned_hr ? (
+                        <>
+                          <div className="text-sm text-gray-800 font-medium leading-snug">{item.assigned_hr.name}</div>
+                          <div className="text-xs text-gray-400 mt-0.5">{item.assigned_hr.email}</div>
+                        </>
+                      ) : (
+                        <span className="text-xs text-gray-300 italic">Not assigned</span>
+                      )}
+                    </td>
+
+                    <td className="px-5 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-800 font-semibold leading-snug">
+                        {item.job_function || <span className="text-gray-300">—</span>}
+                      </div>
+                      {item.tag && (
+                        <div className="text-xs text-gray-400 mt-0.5">{item.tag}</div>
+                      )}
+                    </td>
+
+                    <td className="px-5 py-4 whitespace-nowrap">
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${getStatusStyle(item.status)}`}>
+                        {item.status}
+                      </span>
+                    </td>
+
+                    <td className="px-5 py-4 text-center w-20 whitespace-nowrap">
+                      <div className="relative inline-block" ref={(el) => (menuRefs.current[index] = el)}>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); setOpenMenu(openMenu === index ? null : index); }}
+                          className="p-2 rounded-lg hover:bg-gray-100 transition"
+                        >
+                          <MoreVertical size={18} className="text-gray-500" />
+                        </button>
+
+                        {openMenu === index && (
+                          <div className={`absolute right-12 w-56 z-[9999] ${index >= candidates.length - 3 ? "bottom-10" : "top-10"}`}>
+                            <ActionDropdown
+                              candidateStatus={item.status}
+                              onView={() => { navigate(`/admin/view/${item.id}`); setOpenMenu(null); }}
+                              onEdit={() => { navigate(`/admin/edit-candidate/${item.id}`); setOpenMenu(null); }}
+                              onEmail={() => { handleSendEmail(item); setOpenMenu(null); }}
+                              onAssignHr={() => { setAssignHRCandidate(item); setShowAssignHRModal(true); setOpenMenu(null); }}
+                              onAuditLog={() => { navigate("/admin/audit-log"); setOpenMenu(null); }}
+                              onHold={() => { setOnHoldCandidate(item); setShowOnHoldModal(true); setOpenMenu(null); }}
+                              onRemoveHold={() => { setRemoveHoldCandidate(item); setShowRemoveHoldModal(true); setOpenMenu(null); }}
+                              onReject={() => { setSelectedCandidate(item); setShowRejectModal(true); setOpenMenu(null); }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
 
         {/* PAGINATION (Moved inside the table container) */}
         <div className="p-4 border-t border-gray-100">
