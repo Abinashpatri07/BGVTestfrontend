@@ -389,7 +389,7 @@ export default function Header() {
           <img
             src={logo}
             alt="Logo"
-            className="h-24 w-auto object-contain cursor-pointer transition-transform hover:scale-[1.02]"
+            className="h-9 w-auto object-contain cursor-pointer transition-transform hover:scale-[1.02]"
             onClick={handleLogoClick}
             title="Go to Home"
           />
