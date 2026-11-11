@@ -12,7 +12,7 @@ function formatTimeAgo(dateString) {
   if (diffInSeconds < 60) return "Just now";
   const diffInMinutes = Math.floor(diffInSeconds / 60);
   if (diffInMinutes < 60) return `${diffInMinutes} min ago`;
-  const diffInHours = Math.floor(diffInMinutes / 60);
+  const diffInHours = Math.floor(diffInHours / 60);
   if (diffInHours < 24) return `${diffInHours} hr ago`;
   const diffInDays = Math.floor(diffInHours / 24);
   if (diffInDays === 1) return "1 day ago";
@@ -61,9 +61,9 @@ export default function RecentProfiles({ data = [], className = "" }) {
   const profilesToRender = data && data.length > 0 ? data : sampleProfiles;
 
   return (
-    <div className={`bg-white rounded-2xl border border-[#E8EBFF] p-5 shadow-sm flex flex-col h-[285px] ${className}`}>
+    <div className={`bg-white rounded-2xl border border-[#E8EBFF] p-4 sm:p-5 shadow-sm flex flex-col h-[325px] ${className}`}>
       {/* Header */}
-      <div className="flex items-center justify-between mb-3 shrink-0">
+      <div className="flex items-center justify-between mb-2.5 shrink-0">
         <h3 className="text-sm sm:text-base font-bold text-[#0F172A]">
           Recent profiles
         </h3>
@@ -75,9 +75,9 @@ export default function RecentProfiles({ data = [], className = "" }) {
         </button>
       </div>
 
-      {/* Profiles List with modern scrollbar */}
+      {/* Profiles List: displays exactly 5 full profiles cleanly, remaining scrollable */}
       <div
-        className="flex-1 space-y-2 overflow-y-auto pr-1.5 custom-scrollbar min-h-0"
+        className="flex-1 space-y-1.5 overflow-y-auto pr-1.5 custom-scrollbar min-h-0"
         style={{
           scrollbarWidth: "thin",
           scrollbarColor: "#CBD5E1 #F1F5F9",
