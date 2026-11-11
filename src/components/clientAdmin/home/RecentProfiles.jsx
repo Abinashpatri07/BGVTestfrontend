@@ -12,7 +12,7 @@ function formatTimeAgo(dateString) {
   if (diffInSeconds < 60) return "Just now";
   const diffInMinutes = Math.floor(diffInSeconds / 60);
   if (diffInMinutes < 60) return `${diffInMinutes} min ago`;
-  const diffInHours = Math.floor(diffInMinutes / 60);
+  const diffInHours = Math.floor(diffInSeconds / 60);
   if (diffInHours < 24) return `${diffInHours} hr ago`;
   const diffInDays = Math.floor(diffInHours / 24);
   if (diffInDays === 1) return "1 day ago";
@@ -46,7 +46,7 @@ const AVATAR_PALETTES = [
 export default function RecentProfiles({ data = [] }) {
   const navigate = useNavigate();
 
-  // If data from backend exists, use it; otherwise fallback to exact screenshot sample
+  // Fallback sample if no profiles from backend
   const sampleProfiles = [
     { name: "Deepti Swain", role: "HR", time: "6 days ago" },
     { name: "Nrusingha Prasad", role: "Candidate", time: "7 days ago" },
@@ -56,14 +56,12 @@ export default function RecentProfiles({ data = [] }) {
     { name: "Sagar Sethi", role: "Candidate", time: "27 days ago" },
   ];
 
-  const profilesToRender = data && data.length > 0
-    ? data.slice(0, 7)
-    : sampleProfiles;
+  const profilesToRender = data && data.length > 0 ? data : sampleProfiles;
 
   return (
-    <div className="bg-white rounded-2xl border border-[#E8EBFF] p-5 shadow-sm h-full flex flex-col">
+    <div className="bg-white rounded-2xl border border-[#E8EBFF] p-5 shadow-sm flex flex-col h-[280px]">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3 shrink-0">
         <h3 className="text-sm sm:text-base font-bold text-[#0F172A]">
           Recent profiles
         </h3>
@@ -75,8 +73,14 @@ export default function RecentProfiles({ data = [] }) {
         </button>
       </div>
 
-      {/* Profiles List */}
-      <div className="flex-1 space-y-3.5 overflow-y-auto pr-1">
+      {/* Profiles List with modern scrollbar */}
+      <div
+        className="flex-1 space-y-2.5 overflow-y-auto pr-1.5 custom-scrollbar"
+        style={{
+          scrollbarWidth: "thin",
+          scrollbarColor: "#CBD5E1 #F1F5F9",
+        }}
+      >
         {profilesToRender.map((item, index) => {
           const palette = AVATAR_PALETTES[index % AVATAR_PALETTES.length];
           const initials = getInitials(item.name);
@@ -88,12 +92,12 @@ export default function RecentProfiles({ data = [] }) {
           return (
             <div
               key={index}
-              className="flex items-center justify-between gap-3 py-1 hover:bg-[#F8FAFC] -mx-2 px-2 rounded-lg transition-colors"
+              className="flex items-center justify-between gap-3 py-1 hover:bg-[#F8FAFC] -mx-1 px-1 rounded-lg transition-colors"
             >
-              <div className="flex items-center gap-3 min-w-0">
+              <div className="flex items-center gap-2.5 min-w-0">
                 {/* Avatar Initials Circle */}
                 <div
-                  className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${palette.bg} ${palette.text}`}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${palette.bg} ${palette.text}`}
                 >
                   {initials}
                 </div>
