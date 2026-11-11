@@ -61,7 +61,7 @@ export default function RecentProfiles({ data = [], className = "" }) {
   const profilesToRender = data && data.length > 0 ? data : sampleProfiles;
 
   return (
-    <div className={`bg-white rounded-2xl border border-[#E8EBFF] p-4 sm:p-5 shadow-sm flex flex-col h-[325px] ${className}`}>
+    <div className={`bg-white rounded-2xl border border-[#E8EBFF] p-4 sm:p-5 shadow-sm flex flex-col h-[360px] ${className}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-2.5 shrink-0">
         <h3 className="text-sm sm:text-base font-bold text-[#0F172A]">
