@@ -61,7 +61,7 @@ export default function RecentProfiles({ data = [], className = "" }) {
   const profilesToRender = data && data.length > 0 ? data : sampleProfiles;
 
   return (
-    <div className={`bg-white rounded-2xl border border-[#E8EBFF] p-5 shadow-sm flex flex-col h-full ${className}`}>
+    <div className={`bg-white rounded-2xl border border-[#E8EBFF] p-5 shadow-sm flex flex-col h-[285px] ${className}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-3 shrink-0">
         <h3 className="text-sm sm:text-base font-bold text-[#0F172A]">
@@ -75,7 +75,7 @@ export default function RecentProfiles({ data = [], className = "" }) {
         </button>
       </div>
 
-      {/* Profiles List with modern scrollbar: fills exact card height */}
+      {/* Profiles List with modern scrollbar */}
       <div
         className="flex-1 space-y-2 overflow-y-auto pr-1.5 custom-scrollbar min-h-0"
         style={{

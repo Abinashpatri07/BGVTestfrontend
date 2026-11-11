@@ -44,9 +44,9 @@ export default function HROverview({ data, className = "" }) {
   ];
 
   return (
-    <div className={`bg-white rounded-2xl border border-[#E8EBFF] p-5 shadow-sm flex flex-col justify-between ${className}`}>
+    <div className={`bg-white rounded-2xl border border-[#E8EBFF] p-5 shadow-sm ${className}`}>
       {/* Header */}
-      <div className="flex items-center justify-between mb-4 shrink-0">
+      <div className="flex items-center justify-between mb-4">
         <h2 className="text-sm sm:text-base font-bold text-[#0F172A]">
           HR overview
         </h2>
@@ -55,12 +55,12 @@ export default function HROverview({ data, className = "" }) {
         </span>
       </div>
 
-      {/* Grid: 3 columns matching image layout */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 flex-1">
+      {/* Grid: 3 columns with compact cards matching reference design */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
         {cards.map((card, idx) => (
           <div
             key={idx}
-            className={`p-4 rounded-xl border ${card.bg} ${card.border} flex flex-col justify-between transition-shadow hover:shadow-xs`}
+            className={`p-4 rounded-xl border ${card.bg} ${card.border} flex flex-col justify-between min-h-[96px] transition-shadow hover:shadow-xs`}
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-[#475569]">
@@ -73,7 +73,7 @@ export default function HROverview({ data, className = "" }) {
               </div>
             </div>
 
-            <div className="mt-4">
+            <div className="mt-3">
               <span className={`text-2xl sm:text-3xl font-bold tracking-tight ${card.textColor}`}>
                 {card.value}
               </span>
