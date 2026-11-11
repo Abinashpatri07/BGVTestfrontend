@@ -328,18 +328,16 @@ function CandidateTable({
                     <td className="px-5 py-4 text-sm text-gray-700 font-mono font-medium whitespace-nowrap">{item.candidateId}</td>
 
                     <td className="px-5 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-2 whitespace-nowrap">
-                        <span className="text-sm font-medium text-gray-800">
-                          {item.created_at
-                            ? new Date(item.created_at).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })
-                            : "—"}
-                        </span>
-                        {item.created_at && (
-                          <span className="text-xs text-gray-400 font-normal">
-                            {new Date(item.created_at).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true })}
-                          </span>
-                        )}
+                      <div className="text-sm font-semibold text-gray-800 whitespace-nowrap leading-tight">
+                        {item.created_at
+                          ? new Date(item.created_at).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })
+                          : "—"}
                       </div>
+                      {item.created_at && (
+                        <div className="text-xs text-gray-400 font-normal whitespace-nowrap mt-0.5">
+                          {new Date(item.created_at).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true })}
+                        </div>
+                      )}
                     </td>
 
                     <td className="px-5 py-4 whitespace-nowrap">
